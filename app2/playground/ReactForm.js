@@ -3,6 +3,13 @@ const submitData = (e) => {
     e.preventDefault();
     const personName = e.target.elements.personName.value
     person.name = personName
+    const personAddress = e.target.elements.address.value
+    person.address = personAddress
+    const personPhone = e.target.elements.phone.value
+    person.phone = personPhone
+    const personEmail = e.target.elements.email.value
+    person.email = personEmail
+
     render()
 }
 const render = () => {
@@ -27,11 +34,11 @@ const render = () => {
             </form>
             <div>
                 <hr/>
-                <div>person name: { person.name } </div>
-                <div>person address: { person.address } </div>
-                <div>person phone: { person.phone } </div>
-                <div>person email: { person.email } </div>
-
+                <div>person name: { person.name ? person.name : "--NA--" } </div>
+                <div>person address: { person.address ? person.address : "--NA--"} </div>
+                
+                { person.phone  && <div>phone: {person.phone} </div> }
+                { person.email  && <div>email: {person.email} </div> }
             </div>
         </div>
     

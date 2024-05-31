@@ -1,87 +1,68 @@
 "use strict";
 
-var person = {};
-var submitData = function submitData(e) {
-    e.preventDefault();
-    var personName = e.target.elements.personName.value;
-    person.name = personName;
-    render();
-};
-var render = function render() {
+var product = {};
 
-    var template = React.createElement(
+var clickHandler = function clickHandler(e) {
+  e.preventDefault();
+  product.title = e.target.elements.title.value;
+  product.description = e.target.elements.description.value;
+
+  render();
+};
+
+var render = function render() {
+  var template = React.createElement(
+    "div",
+    null,
+    React.createElement(
+      "h3",
+      null,
+      "App4"
+    ),
+    React.createElement(
+      "form",
+      { onSubmit: clickHandler },
+      React.createElement(
         "div",
         null,
-        React.createElement(
-            "form",
-            { onSubmit: submitData },
-            React.createElement(
-                "div",
-                null,
-                "name: ",
-                React.createElement("input", { type: "text", name: "personName" })
-            ),
-            React.createElement(
-                "div",
-                null,
-                "address: ",
-                React.createElement("input", { type: "text", name: "address" })
-            ),
-            React.createElement(
-                "div",
-                null,
-                "phone: ",
-                React.createElement("input", { type: "text", name: "phone" })
-            ),
-            React.createElement(
-                "div",
-                null,
-                "email: ",
-                React.createElement("input", { type: "text", name: "email" })
-            ),
-            React.createElement(
-                "button",
-                { type: "submit" },
-                "submit"
-            )
-        ),
-        React.createElement(
-            "div",
-            null,
-            React.createElement("hr", null),
-            React.createElement(
-                "div",
-                null,
-                "person name: ",
-                person.name,
-                " "
-            ),
-            React.createElement(
-                "div",
-                null,
-                "person address: ",
-                person.address,
-                " "
-            ),
-            React.createElement(
-                "div",
-                null,
-                "person phone: ",
-                person.phone,
-                " "
-            ),
-            React.createElement(
-                "div",
-                null,
-                "person email: ",
-                person.email,
-                " "
-            )
-        )
-    );
+        "title: ",
+        React.createElement("input", { type: "text", name: "title" })
+      ),
+      React.createElement(
+        "div",
+        null,
+        "description: ",
+        React.createElement("input", { type: "text", name: "description" })
+      ),
+      React.createElement(
+        "button",
+        { type: "submit" },
+        " click here"
+      )
+    ),
+    React.createElement("hr", null),
+    React.createElement("hr", null),
+    React.createElement(
+      "h4",
+      null,
+      "Category Details"
+    ),
+    product.title && React.createElement(
+      "div",
+      null,
+      "title: ",
+      product.title,
+      " "
+    ),
+    product.description && React.createElement(
+      "div",
+      null,
+      "description: ",
+      product.description,
+      " "
+    )
+  );
 
-    var root = document.getElementById('app');
-    ReactDOM.render(template, root);
+  ReactDOM.render(template, document.getElementById("app"));
 };
-
 render();
