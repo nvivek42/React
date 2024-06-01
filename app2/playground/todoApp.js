@@ -1,12 +1,28 @@
-const items = [];
+let items = [];
+
+const markItemComplete = (itemToRemove) => {
+  // for (let index = 0; index < items.length; index++) {
+  //   const item = items[index];
+  //   if (item.id == itemToRemove.id) {
+  //     items.splice(index, 1);
+  //     break;
+  //   }
+  // }
+  items = items.filter((item) => item.id != itemToRemove.id)
+  render();
+};
 
 const addItem = (e) => {
-  const title = e.target.elements.itemtext.value
+  const title = e.target.elements.itemtext.value;
+  console.log(title);
+  if(title !==''){
   items.push({
     id: items.length + 1,
     status: "open",
     title,
-  });
+  })
+};
+  e.target.elements.itemtext.value = ''
   e.preventDefault();
   render();
 };
@@ -21,7 +37,7 @@ const render = () => {
         <form onSubmit={addItem}>
           <div className="input-group mb-3">
             <textarea
-              type="itemtext"
+              name="itemtext"
               className="form-control"
               placeholder="add here...."
               rows="2"
@@ -37,6 +53,7 @@ const render = () => {
           </div>
         </form>
       </div>
+      {items.length > 0 && (
       <div className="items-list">
         {items.map((item) => {
           return (
@@ -49,7 +66,13 @@ const render = () => {
                   size="100"
                   readOnly
                 ></input>
-                <button className="btn btn-danger" type="button">
+                <button
+                  onClick={() => {
+                    markItemComplete(item);
+                  }}
+                  className="btn btn-danger"
+                  type="button"
+                >
                   Complete
                 </button>
                 <p></p>
@@ -57,6 +80,10 @@ const render = () => {
             </div>
           );
         })}
+      </div>
+    )}
+      <div className="footer">
+        <p>copyright @ Vivek made with efforts</p>
       </div>
     </div>
   );
