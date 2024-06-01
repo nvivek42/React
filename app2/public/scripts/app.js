@@ -1,68 +1,71 @@
 "use strict";
 
-var product = {};
+var items = [{ id: 1, title: "read react book 1", status: "open" }, { id: 1, title: "read react book 2", status: "open" }, { id: 1, title: "read react book 3", status: "open" }, { id: 1, title: "read react book 4", status: "open" }];
 
-var clickHandler = function clickHandler(e) {
-  e.preventDefault();
-  product.title = e.target.elements.title.value;
-  product.description = e.target.elements.description.value;
-
-  render();
-};
-
-var render = function render() {
-  var template = React.createElement(
+var template = React.createElement(
+  "div",
+  null,
+  React.createElement(
     "div",
-    null,
+    { className: "title" },
     React.createElement(
-      "h3",
+      "h2",
       null,
-      "App4"
+      "ToDo App"
     ),
     React.createElement(
-      "form",
-      { onSubmit: clickHandler },
-      React.createElement(
-        "div",
-        null,
-        "title: ",
-        React.createElement("input", { type: "text", name: "title" })
-      ),
-      React.createElement(
-        "div",
-        null,
-        "description: ",
-        React.createElement("input", { type: "text", name: "description" })
-      ),
+      "p",
+      null,
+      "What Do You Want To Do Today ?"
+    )
+  ),
+  React.createElement(
+    "div",
+    { className: "add-todo" },
+    React.createElement(
+      "div",
+      { className: "input-group mb-3" },
+      React.createElement("textarea", {
+        type: "text",
+        className: "form-control",
+        placeholder: "add here....",
+        rows: "2",
+        cols: "150"
+      }),
       React.createElement(
         "button",
-        { type: "submit" },
-        " click here"
+        { className: "btn btn-success", type: "button", id: "button-addon2" },
+        "Add"
       )
-    ),
-    React.createElement("hr", null),
-    React.createElement("hr", null),
-    React.createElement(
-      "h4",
-      null,
-      "Category Details"
-    ),
-    product.title && React.createElement(
-      "div",
-      null,
-      "title: ",
-      product.title,
-      " "
-    ),
-    product.description && React.createElement(
-      "div",
-      null,
-      "description: ",
-      product.description,
-      " "
     )
-  );
+  ),
+  React.createElement(
+    "div",
+    { className: "items-list" },
+    items.map(function (item) {
+      return React.createElement(
+        "div",
+        { className: "item" },
+        React.createElement(
+          "div",
+          { className: "input-group mb-3" },
+          React.createElement("input", {
+            type: "text",
+            value: item.title,
+            className: "form-control-lg",
+            size: "100",
+            readOnly: true
+          }),
+          React.createElement(
+            "button",
+            { className: "btn btn-danger", type: "button" },
+            "Complete"
+          ),
+          React.createElement("p", null)
+        )
+      );
+    })
+  )
+);
 
-  ReactDOM.render(template, document.getElementById("app"));
-};
-render();
+ReactDOM.render(template, document.getElementById("app"));
