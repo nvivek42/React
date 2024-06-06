@@ -1,7 +1,13 @@
 class todoApp extends React.Component {
-  render() {
-    const items = [{ id: 1, title: "A", status: "open" }];
+  // constructor(props){
+  //   super(props)
 
+  //   this.state = {
+  //     items = [{ id: 1, title: "A", status: "open" }];
+  //   }
+  // }
+  render() {
+    //const items = [{ id: 1, title: "A", status: "open" }];
     return (
       <div>
         <Header title="ToDo App " subtitle="my first react app " />

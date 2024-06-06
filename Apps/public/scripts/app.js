@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -8,89 +8,91 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CounterApp = function (_React$Component) {
-  _inherits(CounterApp, _React$Component);
+var NotesApp = function (_React$Component) {
+  _inherits(NotesApp, _React$Component);
 
-  function CounterApp(props) {
-    _classCallCheck(this, CounterApp);
+  function NotesApp() {
+    _classCallCheck(this, NotesApp);
 
-    var _this = _possibleConstructorReturn(this, (CounterApp.__proto__ || Object.getPrototypeOf(CounterApp)).call(this, props));
-
-    _this.onIncrement = _this.onIncrement.bind(_this);
-    _this.onDecrement = _this.onDecrement.bind(_this);
-    _this.Reset = _this.onReset.bind(_this);
-
-    _this.state = {
-      counter: 0
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (NotesApp.__proto__ || Object.getPrototypeOf(NotesApp)).apply(this, arguments));
   }
 
-  _createClass(CounterApp, [{
-    key: "onIncrement",
-    value: function onIncrement() {
-      this.setState(function (prevState) {
-        return {
-          counter: prevState.counter + 1
-        };
-      });
-    }
-  }, {
-    key: "onDecrement",
-    value: function onDecrement() {
-      this.setState(function (prevState) {
-        return {
-          counter: prevState.counter - 1
-        };
-      });
-    }
-  }, {
-    key: "onReset",
-    value: function onReset() {
-      this.setState(function (prevState) {
-        return {
-          counter: 0
-        };
-      });
-    }
-  }, {
-    key: "render",
+  _createClass(NotesApp, [{
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
+        'div',
         null,
+        React.createElement(Header, { title: this.props.title, subtitle: this.props.subtitle })
+      );
+    }
+  }]);
+
+  return NotesApp;
+}(React.Component);
+
+NotesApp.defaultProps = {
+  title: 'Notes App',
+  subtitle: 'what do you want to do today ? '
+};
+
+var Header = function (_React$Component2) {
+  _inherits(Header, _React$Component2);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'title' },
         React.createElement(
-          "h4",
+          'h1',
           null,
           this.props.title
         ),
         React.createElement(
-          "div",
+          'h4',
           null,
-          "Count : ",
-          this.state.counter
-        ),
-        React.createElement("hr", null),
-        React.createElement(
-          "button",
-          { onClick: this.onIncrement },
-          "+1"
-        ),
-        React.createElement(
-          "button",
-          { onClick: this.onDecrement },
-          "-1"
-        ),
-        React.createElement(
-          "button",
-          { onClick: this.Reset },
-          "Reset"
+          this.props.subtitle
         )
       );
     }
   }]);
 
-  return CounterApp;
+  return Header;
 }(React.Component);
 
-ReactDOM.render(React.createElement(CounterApp, { title: "Counter App" }), document.getElementById("app"));
+var Header1 = function (_React$Component3) {
+  _inherits(Header1, _React$Component3);
+
+  function Header1() {
+    _classCallCheck(this, Header1);
+
+    return _possibleConstructorReturn(this, (Header1.__proto__ || Object.getPrototypeOf(Header1)).apply(this, arguments));
+  }
+
+  _createClass(Header1, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'h1',
+          null,
+          'this is div1'
+        )
+      );
+    }
+  }]);
+
+  return Header1;
+}(React.Component);
+
+ReactDOM.render(React.createElement(NotesApp, null), document.getElementById("app"));
