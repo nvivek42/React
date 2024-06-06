@@ -20,4 +20,6 @@
 }
 .footer {
     text-align: center;
+    position: fixed;
+    bottom: 5px;
 }

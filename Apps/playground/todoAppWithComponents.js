@@ -1,4 +1,4 @@
-class App extends React.Component {
+class todoApp extends React.Component {
   render() {
     const items = [{ id: 1, title: "A", status: "open" }];
 
@@ -95,4 +95,4 @@ class ListToDoItem extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<todoApp />, document.getElementById("app"));
