@@ -14,17 +14,17 @@ render()
 }
 
 const double = () => {
-  count *= 2
+  counter *= 2
   render()
 }
 
 const triple = () => {
-  count *= 3
+  counter *= 3
   render()
 }
 
 const reset = () => {
-  count = 0
+  counter = 0
   render()
 }
 
