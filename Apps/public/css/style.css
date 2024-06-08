@@ -24,3 +24,11 @@
     bottom: 5px;
 }
 
+.add-note {
+    padding:10px  ;
+    background-color: lightgoldenrodyellow;
+}
+.notes-list {
+    padding: 10px;
+    background-color:ghostwhite;
+}
