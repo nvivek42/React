@@ -1,0 +1,34 @@
+.title {
+    padding: 10px;
+    text-align: center;
+    height: 150px;
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.add-todo {
+    padding:10px  ;
+    background-color: lightgoldenrodyellow;
+}
+.add-todo textarea{
+    resize: none;
+}
+
+.items-list {
+     padding: 10px;
+     background-color:ghostwhite;
+}
+.footer {
+    text-align: center;
+    position: fixed;
+    bottom: 5px;
+}
+
+.add-note {
+    padding:10px  ;
+    background-color: lightgoldenrodyellow;
+}
+.notes-list {
+    padding: 10px;
+    background-color:ghostwhite;
+}
