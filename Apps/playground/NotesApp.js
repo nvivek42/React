@@ -3,37 +3,43 @@ class NotesApp extends React.Component {
     super(props);
 
     this.state = {
-      notes: [
-        { id: 1, title: "note 1" },
-        { id: 2, title: "note 2" },
-        { id: 3, title: "note 3" },
-      ],
+      notes: [],
     };
 
-    this.onAdd = this.onAdd.bind(this)
-    this.onRemove = this.onRemove.bind(this)
+    this.onAdd = this.onAdd.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
-    onAdd(note){
-      this.setState((prevState) => {
-        return {
-          notes: [
-            ...prevState.notes,
-            {
-              id: prevState.notes.length + 1,
-              title: note,
-            },
-          ],
-        }
-      })
+  onAdd(note) {
+    this.setState((prevState) => {
+      return {
+        notes: [
+          ...prevState.notes,
+          {
+            id: prevState.notes.length + 1,
+            title: note,
+          },
+        ],
+      };
+    });
+  }
+
+  onRemove(noteToRemove) {
+    this.setState((prevState) => {
+      return {
+        notes: prevState.notes.filter((note) => note.id != noteToRemove.id),
+      };
+    });
   }
 
   render() {
     return (
       <div>
         <Header title={this.props.title} subtitle={this.props.subtitle} />
-        <AddNote />
-        <NotesList notes={this.state.notes} />
+        <AddNote onAdd={this.onAdd} />
+        {this.state.notes.length > 0 && (
+          <NotesList notes={this.state.notes} onRemove={this.onRemove} />
+        )}
       </div>
     );
   }
@@ -48,11 +54,22 @@ class AddNote extends React.Component {
     super(props);
 
     this.onAdd = this.onAdd.bind(this);
+    this.state = {
+      isError: false,
+    };
   }
 
   onAdd(e) {
     const note = e.target.elements.note.value;
     e.preventDefault();
+    if (note.length > 0) {
+      this.props.onAdd(note);
+    }
+
+    e.target.elements.note.value = "";
+    this.setState({
+      isError: note.length == 0,
+    });
   }
 
   render() {
@@ -71,6 +88,9 @@ class AddNote extends React.Component {
               Add
             </button>
           </div>
+          {this.state.isError && (
+            <div className="text-danger">This cannot be empty</div>
+          )}
         </form>
       </div>
     );
@@ -95,14 +115,16 @@ class NotesList extends React.Component {
     this.onRemove = this.onRemove.bind(this);
   }
 
-  onRemove(note) {}
+  onRemove(note) {
+    this.props.onRemove(note);
+  }
 
   render() {
     return (
       <div className="notes-list">
         {this.props.notes.map((note) => {
           return (
-            <div classname="container">
+            <div>
               <div className="input-group mb-3">
                 <input
                   type="text"

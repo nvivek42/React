@@ -19,7 +19,7 @@ var NotesApp = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (NotesApp.__proto__ || Object.getPrototypeOf(NotesApp)).call(this, props));
 
     _this.state = {
-      notes: [{ id: 1, title: "note 1" }, { id: 2, title: "note 2" }, { id: 3, title: "note 3" }]
+      notes: []
     };
 
     _this.onAdd = _this.onAdd.bind(_this);
@@ -40,14 +40,25 @@ var NotesApp = function (_React$Component) {
       });
     }
   }, {
+    key: "onRemove",
+    value: function onRemove(noteToRemove) {
+      this.setState(function (prevState) {
+        return {
+          notes: prevState.notes.filter(function (note) {
+            return note.id != noteToRemove.id;
+          })
+        };
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return React.createElement(
         "div",
         null,
         React.createElement(Header, { title: this.props.title, subtitle: this.props.subtitle }),
-        React.createElement(AddNote, null),
-        React.createElement(NotesList, { notes: this.state.notes })
+        React.createElement(AddNote, { onAdd: this.onAdd }),
+        this.state.notes.length > 0 && React.createElement(NotesList, { notes: this.state.notes, onRemove: this.onRemove })
       );
     }
   }]);
@@ -69,6 +80,9 @@ var AddNote = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (AddNote.__proto__ || Object.getPrototypeOf(AddNote)).call(this, props));
 
     _this2.onAdd = _this2.onAdd.bind(_this2);
+    _this2.state = {
+      isError: false
+    };
     return _this2;
   }
 
@@ -77,6 +91,14 @@ var AddNote = function (_React$Component2) {
     value: function onAdd(e) {
       var note = e.target.elements.note.value;
       e.preventDefault();
+      if (note.length > 0) {
+        this.props.onAdd(note);
+      }
+
+      e.target.elements.note.value = "";
+      this.setState({
+        isError: note.length == 0
+      });
     }
   }, {
     key: "render",
@@ -102,6 +124,11 @@ var AddNote = function (_React$Component2) {
               { className: "btn btn-success", type: "submit" },
               "Add"
             )
+          ),
+          this.state.isError && React.createElement(
+            "div",
+            { className: "text-danger" },
+            "This cannot be empty"
           )
         )
       );
@@ -157,7 +184,9 @@ var NotesList = function (_React$Component4) {
 
   _createClass(NotesList, [{
     key: "onRemove",
-    value: function onRemove(note) {}
+    value: function onRemove(note) {
+      this.props.onRemove(note);
+    }
   }, {
     key: "render",
     value: function render() {
@@ -169,7 +198,7 @@ var NotesList = function (_React$Component4) {
         this.props.notes.map(function (note) {
           return React.createElement(
             "div",
-            { classname: "container" },
+            null,
             React.createElement(
               "div",
               { className: "input-group mb-3" },
