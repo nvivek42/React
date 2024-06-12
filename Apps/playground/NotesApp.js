@@ -97,16 +97,14 @@ class AddNote extends React.Component {
   }
 }
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div className="title">
-        <h1>{this.props.title}</h1>
-        <h4>{this.props.subtitle}</h4>
-      </div>
-    );
-  }
-}
+const Header = (props) => {
+  return (
+    <div className="title">
+      <h1>{props.title}</h1>
+      <h4>{props.subtitle}</h4>
+    </div>
+  );
+};
 
 class NotesList extends React.Component {
   constructor(props) {
