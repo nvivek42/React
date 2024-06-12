@@ -24,6 +24,7 @@ class CounterApp extends React.Component {
       };
     });
   }
+
   onReset() {
     this.setState((prevState) => {
       return {
@@ -31,6 +32,28 @@ class CounterApp extends React.Component {
       };
     });
   }
+
+  componentDidMount() {
+    console.log("component did mount");
+    this.setState({
+      counter: localStorage["counter"]
+        ? parseInt(localStorage["counter"], 10)
+        : 0,
+    });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Component Did Update");
+    //console.log(prevProps)
+    if (prevState.counter != this.state.counter) {
+      //console.log(prevProps)
+      localStorage.setItem("counter", this.state.counter);
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("component will Unmount");
+  }
+
   render() {
     return (
       <div>

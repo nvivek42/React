@@ -2,53 +2,79 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var NotesApp = function (_React$Component) {
-  _inherits(NotesApp, _React$Component);
+var CounterApp = function (_React$Component) {
+  _inherits(CounterApp, _React$Component);
 
-  function NotesApp(props) {
-    _classCallCheck(this, NotesApp);
+  function CounterApp(props) {
+    _classCallCheck(this, CounterApp);
 
-    var _this = _possibleConstructorReturn(this, (NotesApp.__proto__ || Object.getPrototypeOf(NotesApp)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CounterApp.__proto__ || Object.getPrototypeOf(CounterApp)).call(this, props));
+
+    _this.onIncrement = _this.onIncrement.bind(_this);
+    _this.onDecrement = _this.onDecrement.bind(_this);
+    _this.Reset = _this.onReset.bind(_this);
 
     _this.state = {
-      notes: []
+      counter: 0
     };
-
-    _this.onAdd = _this.onAdd.bind(_this);
-    _this.onRemove = _this.onRemove.bind(_this);
     return _this;
   }
 
-  _createClass(NotesApp, [{
-    key: "onAdd",
-    value: function onAdd(note) {
+  _createClass(CounterApp, [{
+    key: "onIncrement",
+    value: function onIncrement() {
       this.setState(function (prevState) {
         return {
-          notes: [].concat(_toConsumableArray(prevState.notes), [{
-            id: prevState.notes.length + 1,
-            title: note
-          }])
+          counter: prevState.counter + 1
         };
       });
     }
   }, {
-    key: "onRemove",
-    value: function onRemove(noteToRemove) {
+    key: "onDecrement",
+    value: function onDecrement() {
       this.setState(function (prevState) {
         return {
-          notes: prevState.notes.filter(function (note) {
-            return note.id != noteToRemove.id;
-          })
+          counter: prevState.counter - 1
         };
       });
+    }
+  }, {
+    key: "onReset",
+    value: function onReset() {
+      this.setState(function (prevState) {
+        return {
+          counter: 0
+        };
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log("component did mount");
+      this.setState({
+        counter: localStorage["counter"] ? parseInt(localStorage["counter"], 10) : 0
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log("Component Did Update");
+      //console.log(prevProps)
+      if (prevState.counter != this.state.counter) {
+        //console.log(prevProps)
+        localStorage.setItem("counter", this.state.counter);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      console.log("component will Unmount");
     }
   }, {
     key: "render",
@@ -56,179 +82,38 @@ var NotesApp = function (_React$Component) {
       return React.createElement(
         "div",
         null,
-        React.createElement(Header, { title: this.props.title, subtitle: this.props.subtitle }),
-        React.createElement(AddNote, { onAdd: this.onAdd }),
-        this.state.notes.length > 0 && React.createElement(NotesList, { notes: this.state.notes, onRemove: this.onRemove })
-      );
-    }
-  }]);
-
-  return NotesApp;
-}(React.Component);
-
-NotesApp.defaultProps = {
-  title: "Notes App",
-  subtitle: "what do you want to do today ? "
-};
-
-var AddNote = function (_React$Component2) {
-  _inherits(AddNote, _React$Component2);
-
-  function AddNote(props) {
-    _classCallCheck(this, AddNote);
-
-    var _this2 = _possibleConstructorReturn(this, (AddNote.__proto__ || Object.getPrototypeOf(AddNote)).call(this, props));
-
-    _this2.onAdd = _this2.onAdd.bind(_this2);
-    _this2.state = {
-      isError: false
-    };
-    return _this2;
-  }
-
-  _createClass(AddNote, [{
-    key: "onAdd",
-    value: function onAdd(e) {
-      var note = e.target.elements.note.value;
-      e.preventDefault();
-      if (note.length > 0) {
-        this.props.onAdd(note);
-      }
-
-      e.target.elements.note.value = "";
-      this.setState({
-        isError: note.length == 0
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        { className: "add-note" },
         React.createElement(
-          "form",
-          { onSubmit: this.onAdd },
-          React.createElement(
-            "div",
-            { className: "input-group mb-3" },
-            React.createElement("input", {
-              size: "100",
-              name: "note",
-              type: "text",
-              className: "form-control form-control",
-              placeholder: "add notes here"
-            }),
-            React.createElement(
-              "button",
-              { className: "btn btn-success", type: "submit" },
-              "Add"
-            )
-          ),
-          this.state.isError && React.createElement(
-            "div",
-            { className: "text-danger" },
-            "This cannot be empty"
-          )
-        )
-      );
-    }
-  }]);
-
-  return AddNote;
-}(React.Component);
-
-var Header = function (_React$Component3) {
-  _inherits(Header, _React$Component3);
-
-  function Header() {
-    _classCallCheck(this, Header);
-
-    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        { className: "title" },
-        React.createElement(
-          "h1",
+          "h4",
           null,
           this.props.title
         ),
         React.createElement(
-          "h4",
+          "div",
           null,
-          this.props.subtitle
+          "Count : ",
+          this.state.counter
+        ),
+        React.createElement("hr", null),
+        React.createElement(
+          "button",
+          { onClick: this.onIncrement },
+          "+1"
+        ),
+        React.createElement(
+          "button",
+          { onClick: this.onDecrement },
+          "-1"
+        ),
+        React.createElement(
+          "button",
+          { onClick: this.Reset },
+          "Reset"
         )
       );
     }
   }]);
 
-  return Header;
+  return CounterApp;
 }(React.Component);
 
-var NotesList = function (_React$Component4) {
-  _inherits(NotesList, _React$Component4);
-
-  function NotesList(props) {
-    _classCallCheck(this, NotesList);
-
-    var _this4 = _possibleConstructorReturn(this, (NotesList.__proto__ || Object.getPrototypeOf(NotesList)).call(this, props));
-
-    _this4.onRemove = _this4.onRemove.bind(_this4);
-    return _this4;
-  }
-
-  _createClass(NotesList, [{
-    key: "onRemove",
-    value: function onRemove(note) {
-      this.props.onRemove(note);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this5 = this;
-
-      return React.createElement(
-        "div",
-        { className: "notes-list" },
-        this.props.notes.map(function (note) {
-          return React.createElement(
-            "div",
-            null,
-            React.createElement(
-              "div",
-              { className: "input-group mb-3" },
-              React.createElement("input", {
-                type: "text",
-                value: note.title,
-                className: "form-control-lg",
-                size: "100",
-                readOnly: true
-              }),
-              React.createElement(
-                "button",
-                {
-                  onClick: function onClick() {
-                    _this5.onRemove(note);
-                  },
-                  className: "btn btn-danger",
-                  type: "button"
-                },
-                "Delete"
-              ),
-              React.createElement("p", null)
-            )
-          );
-        })
-      );
-    }
-  }]);
-
-  return NotesList;
-}(React.Component);
-
-ReactDOM.render(React.createElement(NotesApp, null), document.getElementById("app"));
+ReactDOM.render(React.createElement(CounterApp, { title: "Counter App" }), document.getElementById("app"));
